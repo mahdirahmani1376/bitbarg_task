@@ -9,7 +9,6 @@ services:
       - ./src:/var/www/html
     networks:
       - app-network
-
   nginx:
     image: nginx:latest
     ports:
@@ -21,21 +20,30 @@ services:
       - php
     networks:
       - app-network
-
-  mysql:
-    image: mysql:8.0
+postgres:
+    image: postgres:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_DATABASE: laravel
+      POSTGRES_USER: local
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: bitbarg_task
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./postgresql:/var/lib/postgresql/data
     networks:
       - app-network
+redis:
+  image: redis:latest
+  ports:
+    - "6379:6379"
+  volumes:
+    - ./redis:/data
+  networks:
+    - app-network
 
 volumes:
-  mysql:
+  postgresql:
+  redis:
 
 networks:
   app-network:
