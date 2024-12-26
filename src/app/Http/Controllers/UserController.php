@@ -33,7 +33,7 @@ class UserController extends Controller
         RespondWithTokenAction $respondWithTokenAction
     )
     {
-        $user = $userLoginAction($request->validated())
+        $user = $userLoginAction($request->validated());
 
         return ['token' => $respondWithTokenAction($user)];
 
