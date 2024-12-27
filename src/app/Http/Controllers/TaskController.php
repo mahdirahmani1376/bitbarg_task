@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\User\AssignTaskAction;
-use App\Actions\User\DeleteTaskAction;
-use App\Actions\User\RemoveUserFromTaskAction;
-use App\Actions\User\StoreTaskAction;
-use App\Actions\User\UpdateTaskAction;
+use App\Actions\Task\AssignTaskAction;
+use App\Actions\Task\DeleteTaskAction;
+use App\Actions\Task\RemoveUserFromTaskAction;
+use App\Actions\Task\StoreTaskAction;
+use App\Actions\Task\UpdateTaskAction;
 use App\Enums\TaskStatusEnum;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;

@@ -18,6 +18,8 @@ class ActivityLog extends Model
         'before',
         'after',
         'changes',
+        'loggable_type',
+        'loggable_id',
     ];
 
     protected $casts = [

@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Actions\User\StoreActivityLogAction;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
@@ -16,7 +15,7 @@ class UserObserver
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user, StoreActivityLogAction $storeActivityLogAction): void
+    public function updated(User $user): void
     {
         $this->forgetCache();
     }
@@ -24,7 +23,7 @@ class UserObserver
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user, StoreActivityLogAction $storeActivityLogAction): void
+    public function deleted(User $user): void
     {
         $this->forgetCache();
     }

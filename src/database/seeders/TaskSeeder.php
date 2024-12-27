@@ -15,15 +15,14 @@ class TaskSeeder extends Seeder
     {
         $users = User::all();
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             $task = Task::factory()->create([
-                'author_id' => $user->id
+                'author_id' => $user->id,
             ]);
 
             $randomUser = $users->random()->id;
 
             $task->assignedUsers()->attach($randomUser);
-        };
+        }
     }
 }

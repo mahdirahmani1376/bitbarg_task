@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class LoginUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class LoginUserRequest extends FormRequest
         return [
             'email' => ['nullable', 'email',
                 Rule::unique('users', 'email')
-                    ->whereNot('id', auth()->id),
+                    ->whereNot('id', auth()->id()),
             ],
             'password' => ['nullable', Password::default()],
             'name' => ['nullable', 'string'],

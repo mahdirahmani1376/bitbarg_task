@@ -8,6 +8,7 @@ use App\Actions\User\UpdateUserAction;
 use App\Actions\User\UserLoginAction;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -63,9 +64,9 @@ class UserController extends Controller
         );
     }
 
-    public function update(User $user, UpdateUserAction $updateUserAction)
+    public function update(UpdateUserAction $updateUserAction, UpdateUserRequest $updateUserRequest)
     {
-        $user = $updateUserAction($user);
+        $user = $updateUserAction(auth()->user(), $updateUserRequest->validated());
 
         return response()->json(
             UserResource::make(
