@@ -12,17 +12,22 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Requests\UserAssignRequest;
 use App\Actions\User\RemoveUserFromTaskAction;
+use App\Enums\TaskStatusEnum;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return response()->json(
                 TaskResource::collection(
-                    Task::filter()
+                    Task::filter(
+                            $request->all()
+                        )
                 )
             );
     }
@@ -68,6 +73,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        $task = Cache::remember($task->getCacheKey(),config('cache.ttl'),$task);
+
         return response()->json(
             TaskResource::make($task)
         );
@@ -99,6 +106,17 @@ class TaskController extends Controller
             [
                 'message' => 'success'
             ]
+        );
+    }
+
+    public function complete(Task $task,UpdateTaskAction $updateTaskAction)
+    {
+        $task = $updateTaskAction($task,[
+            'status' => TaskStatusEnum::COMPLETED
+        ]);
+
+        return response()->json(
+            TaskResource::make($task)
         );
     }
 }

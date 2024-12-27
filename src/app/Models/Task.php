@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatusEnum;
 use Arr;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Cache;
 
 /** 
 * @property string title
@@ -21,6 +23,8 @@ class Task extends Model
     /** @use HasFactory<\Database\Factories\TaskFactory> */
     use HasFactory;
 
+    public const INDEX_CACHE_KEY = 'tasks';
+
     protected $fillable = [
         "title",
         "description",
@@ -30,8 +34,22 @@ class Task extends Model
         "assigned_users",
     ];
 
-    public function scopeFilter(Builder $q,array $data)
+    protected $casts = [
+        'status' => TaskStatusEnum::class,
+        'due_date' => 'timestamp'
+    ];
+
+    public static function filter(array $data)
     {
+        if (empty($data))
+        {
+            return Cache::remember(static::INDEX_CACHE_KEY,config('cache.ttl'),function () {
+                return static::all();
+            });
+        }
+
+        $q = static::query();
+
         $q->when(!empty($data['title']),function(Builder $q) use ($data) {
             $q->where('title','like',"%{$data['title']}%");
         });
@@ -57,6 +75,8 @@ class Task extends Model
                 $q->whereIn('user_id',$data['assigned_users']);
             });
         });
+
+        return $q->get();
     }
 
     public function assignedUsers()
@@ -67,5 +87,10 @@ class Task extends Model
     public function author()
     {
         return $this->belongsTo(User::class,'author_id');
+    }
+
+    public function getCacheKey() : string 
+    {
+        return "task_{$this->id}";
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
-class StoreTaskRequest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +24,12 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => ['required','string'],
-            "description" => ['required','string'],
-            "author_id" => ['required','exists:users,id'],
-            "due_date" => ['required','after:now'],
+            'email' => ['nullable', 'email',
+                Rule::unique('users','email')
+                    ->whereNot('id',auth()->id)
+            ],
+            'password' => ['nullable',Password::default()],
+            'name' => ['nullable','string']
         ];
     }
 }

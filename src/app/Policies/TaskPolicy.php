@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Enums\TaskStatusEnum;
 
 class TaskPolicy
 {
@@ -46,11 +47,22 @@ class TaskPolicy
             return true;
         }
 
-        if ($user->HasTaskAssignedTo($task))
+        return false;
+
+    }
+
+    public function complete(User $user, Task $task)
+    {
+        if (
+            $user->HasTaskAssignedTo($task)
+            &&
+            now() < $task->due_date
+            && 
+            $task->status != TaskStatusEnum::COMPLETED
+        )
         {
             return true;
         }
-
     }
 
     /**
