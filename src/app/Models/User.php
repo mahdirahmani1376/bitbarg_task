@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\RolesEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,5 +49,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdministrator(): bool
+    {
+        return $this->roles->where('name',RolesEnum::ADMIN->value)->exists();
+    }
+
+    public function isAuthorOfTask(Task $task): bool
+    {
+        return $this->id === $task->author_id;
+    }
+
+    public function HasTaskAssignedTo(Task $task): bool
+    {
+        return $this->assignedTasks()->wherePivot('task_id','=',$task->id)->exists();
+    }
+
+
+    public function assignedTasks(): BelongsToMany
+    {
+        return $this->belongsToMany(Task::class,'user_tasks','task_id','user_id');
     }
 }
