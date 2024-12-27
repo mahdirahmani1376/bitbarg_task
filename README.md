@@ -19,7 +19,7 @@ https://cloudy-station-989745.postman.co/workspace/bitbarg~5cf9583f-f230-4c74-80
 2. Create a task
 3. You can assign users to a task with the Assign users method
 4. Assigned users can mark the task as completed with the complete task method
-## Porject description based on task
+## Project description based on task
 #####User Authentication and Authorization
 - For roles i have used the spatie permissions library which is a very complete tool
  the available roles are admin and user
