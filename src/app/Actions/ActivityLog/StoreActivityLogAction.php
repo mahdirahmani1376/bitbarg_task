@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class StoreActivityLogAction
 {
-    public function __invoke(User $user,Model $model): Task
+    public function __invoke(User $user, Model $model): Task
     {
         $log = ActivityLog::create([
-            "user_id" => $user->id,
-            "before" => $model->getOriginal(),
-            "after" => $model->getDirty(),
-            "changes" => $model->getChanges(),
+            'user_id' => $user->id,
+            'before' => $model->getOriginal(),
+            'after' => $model->getDirty(),
+            'changes' => $model->getChanges(),
         ]);
 
         return $log;

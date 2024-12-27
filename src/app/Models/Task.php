@@ -97,6 +97,6 @@ class Task extends Model
 
     public function acitvityLogs(): MorphMany
     {
-        return $this->morphMany(ActivityLog::class,'loggable');
+        return $this->morphMany(ActivityLog::class, 'loggable');
     }
 }

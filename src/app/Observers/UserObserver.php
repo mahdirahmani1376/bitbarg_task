@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Actions\User\StoreActivityLogAction;
-use App\Models\Task;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +16,7 @@ class UserObserver
     /**
      * Handle the User "updated" event.
      */
-    public function updated(User $user,StoreActivityLogAction $storeActivityLogAction): void
+    public function updated(User $user, StoreActivityLogAction $storeActivityLogAction): void
     {
         $this->forgetCache();
     }
@@ -25,7 +24,7 @@ class UserObserver
     /**
      * Handle the User "deleted" event.
      */
-    public function deleted(User $user,StoreActivityLogAction $storeActivityLogAction): void
+    public function deleted(User $user, StoreActivityLogAction $storeActivityLogAction): void
     {
         $this->forgetCache();
     }
@@ -34,6 +33,4 @@ class UserObserver
     {
         return Cache::forget(User::INDEX_CACHE_KEY);
     }
-
-
 }

@@ -16,8 +16,7 @@ class UpdateTaskAction
             'due_date' => $data['due_date'],
         ]);
 
-        activiy_log(auth()->user(),$task);
-
+        activiy_log(auth()->user(), $task);
 
         return $task;
     }
