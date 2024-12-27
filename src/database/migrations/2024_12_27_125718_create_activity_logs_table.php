@@ -17,8 +17,8 @@ return new class extends Migration
             $table
                 ->foreignId('user_id')
                 ->index()
-                ->references('users')
-                ->on('id')
+                ->references('id')
+                ->on('users')
                 ->cascadeOnDelete();
 
             $table->morphs('loggable');

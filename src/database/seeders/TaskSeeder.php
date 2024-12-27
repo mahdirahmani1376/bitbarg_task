@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -11,6 +13,17 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $users = User::all();
+
+        foreach ($users as $user)
+        {
+            $task = Task::factory()->create([
+                'author_id' => $user->id
+            ]);
+
+            $randomUser = $users->random()->id;
+
+            $task->assignedUsers()->attach($randomUser);
+        };
     }
 }

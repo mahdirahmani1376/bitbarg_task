@@ -21,8 +21,8 @@ return new class extends Migration
             $table
                 ->foreignId('author_id')
                 ->index()
-                ->references('users')
-                ->on('id');
+                ->references('id')
+                ->on('users');
 
             $table->timestamp('due_date');
             $table->timestamps();

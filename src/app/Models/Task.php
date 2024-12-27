@@ -33,7 +33,6 @@ class Task extends Model
         'status',
         'author_id',
         'due_date',
-        'assigned_users',
     ];
 
     protected $casts = [
@@ -82,7 +81,7 @@ class Task extends Model
 
     public function assignedUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_tasks', 'user_id', 'task_id');
+        return $this->belongsToMany(User::class, 'user_tasks', 'task_id', 'user_id');
     }
 
     public function author(): BelongsTo

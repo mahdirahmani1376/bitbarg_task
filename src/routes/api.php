@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Task;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 Route::group([
     'controller' => UserController::class,
