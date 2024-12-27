@@ -15,6 +15,10 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Set the working directory
 WORKDIR /var/www/html
 
+# Install Redis extension
+RUN pecl install redis && docker-php-ext-enable redis
+
+
 # Copy application files (adjust according to your project structure)
 COPY ./src /var/www/html
 
