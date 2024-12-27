@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
