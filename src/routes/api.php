@@ -21,11 +21,11 @@ Route::group([
     'prefix' => 'tasks',
 ], function () {
     Route::get('/', 'index')->name('tasks.index');
-    Route::get('/{id}', 'index')->name('tasks.show')->middleware('can:view,task');
+    Route::get('/{task}', 'show')->name('tasks.show')->middleware('can:view,task');
     Route::post('/', 'store')->name('tasks.store');
-    Route::post('/{id}/assign', 'assign')->name('tasks.assign')->middleware('can:assign,task');
-    Route::post('/{id}/remove_user', 'assign')->name('tasks.remove_user')->middleware('can:removeUser,task');
-    Route::post('/{id}/complete', 'complete')->name('tasks.complete')->middleware('can:complete,task');
-    Route::put('/{id}', 'update')->name('tasks.update')->middleware('can:update,task');
-    Route::delete('/{id}', 'destroy')->name('tasks.delete')->middleware('can:delete,task');
+    Route::post('/assign-user/{task}', 'assign')->name('tasks.assign')->middleware('can:assign,task');
+    Route::post('/remove-user/{task}', 'remove')->name('tasks.remove_user')->middleware('can:removeUser,task');
+    Route::post('/complete/{task}', 'complete')->name('tasks.complete')->middleware('can:complete,task');
+    Route::put('/update/{task}', 'update')->name('tasks.update')->middleware('can:update,task');
+    Route::delete('/{task}', 'destroy')->name('tasks.delete')->middleware('can:delete,task');
 });

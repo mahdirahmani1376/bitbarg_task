@@ -14,7 +14,6 @@ use App\Http\Requests\UserAssignRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class TaskController extends Controller
 {
@@ -37,7 +36,10 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request, StoreTaskAction $storeTaskAction)
     {
-        $task = $storeTaskAction($request->validated());
+        $task = $storeTaskAction([
+            ...$request->validated(),
+            'author_id' => auth()->id(),
+        ]);
 
         return response()->json(
             TaskResource::make(
@@ -48,7 +50,7 @@ class TaskController extends Controller
 
     public function assign(Task $task, AssignTaskAction $assignTaskAction, UserAssignRequest $userAssignRequest)
     {
-        $task = $assignTaskAction($userAssignRequest->validated());
+        $task = $assignTaskAction($task, $userAssignRequest->validated());
 
         return response()->json(
             TaskResource::make(
@@ -57,9 +59,9 @@ class TaskController extends Controller
         );
     }
 
-    public function removeUser(Task $task, RemoveUserFromTaskAction $removeUserFromTaskAction, UserAssignRequest $userAssignRequest)
+    public function remove(Task $task, RemoveUserFromTaskAction $removeUserFromTaskAction, UserAssignRequest $userAssignRequest)
     {
-        $task = $removeUserFromTaskAction($userAssignRequest->validated());
+        $task = $removeUserFromTaskAction($task, $userAssignRequest->validated());
 
         return response()->json(
             TaskResource::make(
@@ -73,8 +75,6 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $task = Cache::remember($task->getCacheKey(), config('cache.ttl'), $task);
-
         return response()->json(
             TaskResource::make($task)
         );

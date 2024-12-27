@@ -12,7 +12,7 @@ class DeleteTaskAction
 
         $task->delete();
 
-        $task->assigned_users()->detach();
+        $task->assignedUsers()->detach();
 
     }
 }

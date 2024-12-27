@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function isAdministrator(): bool
     {
-        return $this->roles->where('name', RolesEnum::ADMIN->value)->exists();
+        return $this->hasRole(RolesEnum::ADMIN);
     }
 
     public function isAuthorOfTask(Task $task): bool

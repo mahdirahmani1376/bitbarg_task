@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Cache;
  * @property string status
  * @property int author_id
  * @property string due_date
- * @property ?Collection assigned_users
+ * @property ?Collection assignedUsers
  */
 class Task extends Model
 {
@@ -37,7 +37,6 @@ class Task extends Model
 
     protected $casts = [
         'status' => TaskStatusEnum::class,
-        'due_date' => 'timestamp',
     ];
 
     public static function filter(array $data): ?Collection
@@ -87,11 +86,6 @@ class Task extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
-    }
-
-    public function getCacheKey(): string
-    {
-        return "task_{$this->id}";
     }
 
     public function acitvityLogs(): MorphMany

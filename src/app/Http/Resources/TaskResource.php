@@ -21,7 +21,7 @@ class TaskResource extends JsonResource
             'status' => $this->status,
             'author_id' => $this->author_id,
             'due_date' => $this->due_date,
-            'assigned_users' => UserResource::collection($this->assigned_users),
+            'assigned_users' => UserResource::collection($this->assignedUsers),
             'due_date' => $this->due_date,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

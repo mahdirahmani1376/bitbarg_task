@@ -49,7 +49,7 @@ class TaskPolicy
     public function complete(User $user, Task $task)
     {
         if (
-            $user->HasTaskAssignedTo($task)
+            ($user->HasTaskAssignedTo($task) || $user->isAuthorOfTask($task))
             &&
             now() < $task->due_date
             &&
