@@ -16,15 +16,15 @@ class TaskResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            "title" => $this->title,
-            "description" => $this->description,
-            "status" => $this->status,
-            "author_id" => $this->author_id,
-            "due_date" => $this->due_date,
-            "assigned_users" => UserResource::collection($this->assigned_users),
+            'title' => $this->title,
+            'description' => $this->description,
+            'status' => $this->status,
+            'author_id' => $this->author_id,
             'due_date' => $this->due_date,
-            "created_at" => $this->created_at,
-            "updated_at" => $this->updated_at,
+            'assigned_users' => UserResource::collection($this->assigned_users),
+            'due_date' => $this->due_date,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

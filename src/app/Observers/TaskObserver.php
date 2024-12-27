@@ -13,7 +13,7 @@ class TaskObserver
         $this->forgetCache();
 
     }
- 
+
     /**
      * Handle the User "updated" event.
      */
@@ -22,7 +22,7 @@ class TaskObserver
         $this->forgetCache();
 
     }
- 
+
     /**
      * Handle the User "deleted" event.
      */

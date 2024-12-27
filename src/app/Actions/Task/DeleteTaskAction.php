@@ -3,8 +3,6 @@
 namespace App\Actions\User;
 
 use App\Models\Task;
-use App\Models\User;
-use Illuminate\Support\Facades\Cache;
 
 class DeleteTaskAction
 {
@@ -15,5 +13,4 @@ class DeleteTaskAction
         $task->assigned_users()->detach();
 
     }
-
 }

@@ -5,19 +5,19 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\RolesEnum;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory,Notifiable,HasRoles;
+    use HasApiTokens, HasFactory,HasRoles,Notifiable;
 
     public const INDEX_CACHE_KEY = 'users';
 
@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function isAdministrator(): bool
     {
-        return $this->roles->where('name',RolesEnum::ADMIN->value)->exists();
+        return $this->roles->where('name', RolesEnum::ADMIN->value)->exists();
     }
 
     public function isAuthorOfTask(Task $task): bool
@@ -67,13 +67,12 @@ class User extends Authenticatable
 
     public function HasTaskAssignedTo(Task $task): bool
     {
-        return $this->assignedTasks()->wherePivot('task_id','=',$task->id)->exists();
+        return $this->assignedTasks()->wherePivot('task_id', '=', $task->id)->exists();
     }
-
 
     public function assignedTasks(): BelongsToMany
     {
-        return $this->belongsToMany(Task::class,'user_tasks','task_id','user_id');
+        return $this->belongsToMany(Task::class, 'user_tasks', 'task_id', 'user_id');
     }
 
     protected function password(): Attribute

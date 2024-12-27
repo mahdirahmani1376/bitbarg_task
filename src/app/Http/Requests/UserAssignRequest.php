@@ -22,8 +22,8 @@ class UserAssignRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_ids' => ['required','array'],
-            'user_ids.*' => ['required','exists:users,id']
+            'user_ids' => ['required', 'array'],
+            'user_ids.*' => ['required', 'exists:users,id'],
         ];
     }
 }

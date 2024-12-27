@@ -11,7 +11,7 @@ class UserObserver
     {
         $this->forgetCache();
     }
- 
+
     /**
      * Handle the User "updated" event.
      */
@@ -19,7 +19,7 @@ class UserObserver
     {
         $this->forgetCache();
     }
- 
+
     /**
      * Handle the User "deleted" event.
      */

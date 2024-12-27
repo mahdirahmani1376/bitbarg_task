@@ -25,11 +25,11 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email' => ['nullable', 'email',
-                Rule::unique('users','email')
-                    ->whereNot('id',auth()->id)
+                Rule::unique('users', 'email')
+                    ->whereNot('id', auth()->id),
             ],
-            'password' => ['nullable',Password::default()],
-            'name' => ['nullable','string']
+            'password' => ['nullable', Password::default()],
+            'name' => ['nullable', 'string'],
         ];
     }
 }

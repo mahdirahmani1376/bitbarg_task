@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\PermissionEnums;
 use App\Enums\RolesEnum;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -22,8 +21,7 @@ class RolePermissionSeeder extends Seeder
         $userRole = Role::findOrCreate(RolesEnum::User->value);
         $superAdmin = Role::findOrCreate(RolesEnum::SUPER_ADMIN->value);
 
-        foreach ($persmissions as $persmission)
-        {
+        foreach ($persmissions as $persmission) {
             Permission::findOrCreate(
                 $persmission->value
             );

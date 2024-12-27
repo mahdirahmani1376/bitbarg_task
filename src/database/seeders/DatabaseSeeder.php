@@ -18,25 +18,24 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@example.com',
-            'password' => 123
+            'password' => 123,
         ]);
 
         $admin = User::factory()->create([
             'name' => 'admin',
             'email' => 'user@example.com',
-            'password' => 123
+            'password' => 123,
         ]);
 
         $super_admin = User::factory()->create([
             'name' => 'super_admin',
             'email' => 'super_admin@example.com',
-            'password' => 123
+            'password' => 123,
         ]);
 
         $this->call([
-            RolePermissionSeeder::class
+            RolePermissionSeeder::class,
         ]);
-
 
     }
 }

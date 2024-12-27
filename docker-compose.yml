@@ -20,26 +20,26 @@ services:
       - php
     networks:
       - app-network
-postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: local
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: bitbarg_task
+  postgres:
+      image: postgres:latest
+      environment:
+        POSTGRES_USER: mahdi
+        POSTGRES_PASSWORD: 123
+        POSTGRES_DB: bitbarg_task
+      ports:
+        - "5423:5432"
+      volumes:
+        - ./postgresql:/var/lib/postgresql/data
+      networks:
+        - app-network
+  redis:
+    image: redis:latest
     ports:
-      - "5432:5432"
+      - "6379:6379"
     volumes:
-      - ./postgresql:/var/lib/postgresql/data
+      - ./redis:/data
     networks:
       - app-network
-redis:
-  image: redis:latest
-  ports:
-    - "6379:6379"
-  volumes:
-    - ./redis:/data
-  networks:
-    - app-network
 
 volumes:
   postgresql:
