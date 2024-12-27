@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum PermissionEnums: string
+enum PermissionsEnum: string
 {
     case VIEW_TASK = "view_tasks";
     case UPDATE_TASK = "update_tasks";
