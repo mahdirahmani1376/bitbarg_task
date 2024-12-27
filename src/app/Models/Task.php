@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -38,7 +41,7 @@ class Task extends Model
         'due_date' => 'timestamp',
     ];
 
-    public static function filter(array $data)
+    public static function filter(array $data): ?Collection
     {
         if (empty($data)) {
             return Cache::remember(static::INDEX_CACHE_KEY, config('cache.ttl'), function () {
@@ -77,12 +80,12 @@ class Task extends Model
         return $q->get();
     }
 
-    public function assignedUsers()
+    public function assignedUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_tasks', 'user_id', 'task_id');
     }
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id');
     }
@@ -90,5 +93,10 @@ class Task extends Model
     public function getCacheKey(): string
     {
         return "task_{$this->id}";
+    }
+
+    public function acitvityLogs(): MorphMany
+    {
+        return $this->morphMany(ActivityLog::class,'loggable');
     }
 }

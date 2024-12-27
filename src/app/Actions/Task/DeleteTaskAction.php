@@ -3,6 +3,7 @@
 namespace App\Actions\User;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class DeleteTaskAction
 {
@@ -12,5 +13,6 @@ class DeleteTaskAction
 
         $task->assigned_users()->detach();
 
+        activiy_log(auth()->user(),$task);
     }
 }

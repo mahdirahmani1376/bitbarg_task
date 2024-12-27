@@ -10,6 +10,8 @@ class UpdateUserAction
     {
         $user->update($data);
 
+        activiy_log(auth()->user(), $user);
+
         return $user;
     }
 }
