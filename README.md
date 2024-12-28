@@ -7,7 +7,9 @@ to other users
 ## Setup
 - clone the repo and run the following commands
 ```sh
-cp .env .env.example
+cd src
+cp .env.example .env
+cd ../
 docker compose up -d --build
 docker exec -it bitbarg_task-php-1 composer install
 docker exec -it bitbarg_task-php-1 php artisan migrate --seed
